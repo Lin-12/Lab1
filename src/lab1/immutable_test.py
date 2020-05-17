@@ -14,7 +14,7 @@ class TestMutableList(unittest.TestCase):
         self.assertEqual(lst.size(), 2)
 
     def test_to_list(self):
-        self.assertEqual(UnrolledLinkList().to_list(), 0)
+        self.assertEqual(UnrolledLinkList().to_list(), [])
         lst = UnrolledLinkList()
         lst.add(0, 'm')
         self.assertEqual(lst.to_list(), ['m'])
@@ -40,6 +40,14 @@ class TestMutableList(unittest.TestCase):
         lst.from_list([1, 2, 3])
         lst.map(str)
         self.assertEqual(lst.to_list(), ["1", "2", "3"])
+
+    def test_add_to_head(self):
+        lst = UnrolledLinkList()
+        self.assertEqual(lst.to_list(), [])
+        lst.add(0, 'a')
+        self.assertEqual(lst.to_list(), ['a'])
+        lst.add(0, 'b')
+        self.assertEqual(lst.to_list(), ['b', 'a'])
 
     def test_reduce(self):
         lst = UnrolledLinkList()
@@ -72,23 +80,50 @@ class TestMutableList(unittest.TestCase):
         lst.from_list(a)
         self.assertEqual(lst.size(), len(a))
 
-    @given(st.lists(st.integers()))
+    @given(a=st.lists(st.integers()), b=st.lists(st.integers()), c=st.lists(st.integers()))
     def test_monoid_associativity(self, a, b, c):
-        lst = UnrolledLinkList()
-        lst1 = lst.from_list(a)
-        lst2 = lst.from_list(b)
-        lst3 = lst.from_list(c)
-        test1 = lst.mconcat(lst.mconcat(lst1, lst2), lst3)
-        test2 = lst.mconcat(lst1, lst.mconcat(lst2, lst3))
-        self.assertEqual(test1, test2)
+        a = []
+        b = []
+        c = []
+        lst1 = UnrolledLinkList()
+        lst2 = UnrolledLinkList()
+        lst3 = UnrolledLinkList()
+        lst1.from_list(a)
+        lst2.from_list(b)
+        lst3.from_list(c)
+        lst_test1 = UnrolledLinkList()
+        lst_test2 = UnrolledLinkList()
+        lst_test2.mconcat(lst1, lst2)
+        lst_test1.mconcat(lst_test2, lst3)
+        lst1 = UnrolledLinkList()
+        lst2 = UnrolledLinkList()
+        lst3 = UnrolledLinkList()
+        lst1.from_list(a)
+        lst2.from_list(b)
+        lst3.from_list(c)
+        lst_test3 = UnrolledLinkList()
+        lst_test2 = UnrolledLinkList()
+        lst_test2.mconcat(lst2, lst3)
+        lst_test3.mconcat(lst1, lst_test2)
+
+        lst_1 = lst_test1.to_list()
+        lst_2 = lst_test2.to_list()
+        self.assertEqual(lst_1, lst_2)
 
     @given(st.lists(st.integers()))
-    def test_monoid_identity(self, lst):
-        lst1 = UnrolledLinkList().from_list(lst)
-        lst2 = UnrolledLinkList()
+    def test_monoid_identity(self, a):
+        a = []
+        lst = UnrolledLinkList()
+        lst.from_list(a)
+        lst1 = UnrolledLinkList()
         lst_concat = UnrolledLinkList()
-        self.assertEqual(UnrolledLinkList(lst_concat.mconcat((lst1, lst2.empty()))).to_list(), lst)
-        self.assertEqual(UnrolledLinkList(lst_concat.mconcat(lst2.empty(), lst1)).to_list(), lst)
+        lst_concat.mconcat(lst, lst1.empty())
+        b = lst_concat.to_list()
+        self.assertEqual(b, a)
+        lst_concat = UnrolledLinkList()
+        lst_concat.mconcat(lst1.empty(), lst)
+        b = lst_concat.to_list()
+        self.assertEqual(b, a)
 
     def test_iter(self):
         x = [1, 2, 3]
@@ -122,5 +157,6 @@ class TestMutableList(unittest.TestCase):
         lst.filter(f)
         self.assertEqual([2, 3, 4], lst.to_list())
 
-    if __name__ == '__main__':
-        unittest.main()
+
+if __name__ == '__main__':
+    unittest.main()

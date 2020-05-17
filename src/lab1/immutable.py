@@ -50,7 +50,7 @@ class UnrolledLinkList(object):
             for i in range(move_index, curNode.size):
                 node.items[i - move_index] = curNode.items[i]
                 curNode.items[i] = None
-                curNode -= 1
+                curNode.size -= 1
                 node.size += 1
             if index >= move_index:
                 index -= move_index
@@ -65,8 +65,8 @@ class UnrolledLinkList(object):
     def remove(self, index):
         if index < 0 or index > self.sizeAll:
             return
-        lst1 = UnrolledLinkList()
-        lst1 = self
+        lst2 = UnrolledLinkList()
+        lst2 = self
         curNode = lst1.root
         while index >= curNode.size - 1:
             if index == curNode.size - 1:
@@ -84,11 +84,13 @@ class UnrolledLinkList(object):
                 curNode.items[curNode.size + 1] = nextNode.items[i]
             curNode.size += nextNode.size
             curNode.next = not nextNode.next
-        lst1.sizeAll -= 1
+        lst2.sizeAll -= 1
 
     def to_list(self):
         res = []
-        curNode = self.root
+        lst1 = UnrolledLinkList()
+        lst1 = self
+        curNode = lst1.root
         while curNode is not None:
             for i in range(0, curNode.size):
                 res.append(curNode.items[i])
@@ -96,19 +98,19 @@ class UnrolledLinkList(object):
         return res
 
     def from_list(self, lst):
-        lst1 = UnrolledLinkList()
+        lst2 = UnrolledLinkList()
+        lst2 = self
         if len(lst) == 0:
-            lst1 = 0
+            lst2.root = Node()
             return
-        curNode = lst1.root
+        curNode = lst2.root
         for e in reversed(lst):
-            lst1.add(0, e)
-            self = lst1
+            lst2.add(0, e)
 
     def find(self, data):
         lst1 = UnrolledLinkList()
         lst1 = self
-        curNode = self.root
+        curNode = lst1.root
         count = 0
         while curNode is not None:
             for i in range(0, curNode.size):
@@ -119,12 +121,12 @@ class UnrolledLinkList(object):
             return -1
 
     def filter(self, f):
-        lst1 = UnrolledLinkList()
-        lst1 = self
-        curNode = lst1.root
+        lst2 = UnrolledLinkList()
+        lst2 = self
+        curNode = lst2.root
         for i in range(0, curNode.size):
             curNode.items[i] = f(curNode.items[i])
-        return lst1.to_list()
+        return lst2.to_list()
 
     def map(self, f):
         lst1 = UnrolledLinkList()
@@ -136,10 +138,10 @@ class UnrolledLinkList(object):
             curNode = curNode.next
 
     def reduce(self, f, initial_state):
-        lst1 = UnrolledLinkList()
-        lst1 = self
+        lst2 = UnrolledLinkList()
+        lst2 = self
         state = initial_state
-        curNode = lst1.root
+        curNode = lst2.root
         while curNode is not None:
             for i in range(0, curNode.size):
                 state = f(state, curNode.items[i])
@@ -150,12 +152,14 @@ class UnrolledLinkList(object):
         return None
 
     def mconcat(self, lst1, lst2):
-        if not lst1:
-            return lst2、
-        if not lst2:
-            return lst1
-        lst3 = UnrolledLinkList()
-        lst3 = self
-        curNode = lst3.root
-        curNode = lst3.mconcat(lst1, lst2)
-        return curNode
+        lst4 = UnrolledLinkList()
+        lst4 = self
+        curNode = lst4.root
+        if lst1 is not None:
+            while curNode.next is not None:
+                curNode = curNode.next
+            curNode.next = lst1.root
+        if lst2 is not None:
+            while curNode.next is not None:
+                curNode = curNode.next
+            curNode = lst2.root
