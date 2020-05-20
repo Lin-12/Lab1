@@ -1,19 +1,19 @@
 ## Computer Process Organization
-###Lab1
+### Lab1
 
 #### Title:
   Computational Process Organization Lab1,variant 1
 
-####List of group members:
+#### List of group members:
   - Name:Huang Yanlin student number:192050222 
   - Name:Lin ningning student number:192050192
 
-####Laboratory work number:
+#### Laboratory work number:
   - Lab1 variant 1
-####Description:
+#### Description:
   - variant 1: Unrolled linked list (you can use built-in list inside node).
 
-####Synopsis:  
+#### Synopsis:  
     1)add a new element (lst.add(3), cons(lst, 3), extend(lst, 3));  
     2)remove an element (lst.remove(3), remove(lst, 3));
     3)size (lst.size(), size(lst));    
