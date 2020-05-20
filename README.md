@@ -1,4 +1,4 @@
-## Computer Process Organization##
+## Computer Process Organization
 1.Title:
   Computational Process Organization Lab1,variant 1
 
@@ -13,15 +13,24 @@
   variant 1: Unrolled linked list (you can use built-in list inside node).
 
 5.Synopsis:
-    1)add a new element (lst.add(3), cons(lst, 3), extend(lst, 3)); 
+    1)add a new element (lst.add(3), cons(lst, 3), extend(lst, 3));  
+    
     2)remove an element (lst.remove(3), remove(lst, 3));
+    
     3)size (lst.size(), size(lst));
+    
     4)conversion from and to python lists (lst.to_list(), lst.from_list([12, 99, 37]), from_list([12, 99, 37]));
+    
     5)find element by specific predicate (lst.find(is_even_), );
+    
     6)filter data structure by specific predicate (lst.filter(is_even));
+    
     7)map structure by speci?c function (lst.map(increment));
+    
     8)reduce-process structure elements to build a return value by speci?c functions (lst.reduce(sum));
+    
     9)data structure should be a monoid and implement mempty and mconcat functions or methods;
+    
     10)iterator: 
         for the mutable version in Python style [12, Chapter 7. Classes & Iterators]; 
         for the immutable version by closure [14], see example ahead.
