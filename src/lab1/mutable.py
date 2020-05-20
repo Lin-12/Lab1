@@ -9,9 +9,9 @@ class Node(object):
 
 
 class UnrolledLinkList(object):
-    def __init__(self):
+    def __init__(self, root=None):
         self.sizeAll = 0
-        self.root = Node()
+        self.root = root
 
     def __iter__(self):
         return UnrolledLinkList()
@@ -19,11 +19,11 @@ class UnrolledLinkList(object):
     def __next__(self):
         if self.root is None:
             raise StopIteration
-        while self.root is not None:
-            for i in range(0, self.root.size):
-                temp = self.root.items[i]
-                return temp
-            self.root = not self.root
+        curNode = self.root
+        for i in range(0, curNode.size):
+            temp = curNode.elements[i]
+            return temp
+        self.root = curNode.next
 
     def size(self):
         return self.sizeAll
@@ -37,21 +37,20 @@ class UnrolledLinkList(object):
                 break
             index -= curNode.size
             curNode = curNode.next
-
         if curNode.size == curNode.capacity:
             node = Node()
-            nextNode = curNode.next
+            next_node = curNode.next
             curNode.next = node
-            node.next = nextNode
-
-            move_index = curNode.size // 2
-            for i in range(move_index, curNode.size):
-                node.items[i - move_index] = curNode.items[i]
+            node.next = next_node
+            move_idx = curNode.size // 2
+            for i in range(move_idx, curNode.size):
+                node.items[i - move_idx] = curNode.items[i]
                 curNode.items[i] = None
                 curNode.size -= 1
                 node.size += 1
-            if index >= move_index:
-                index -= move_index
+
+            if index >= move_idx:
+                index -= move_idx
                 curNode = node
 
         for i in range(curNode.size - 1, index - 1, -1):
@@ -74,12 +73,12 @@ class UnrolledLinkList(object):
         curNode.items[curNode.size - 1] = None
         curNode.size -= 1
 
-        if curNode.capacity >= curNode.size + curNode.next.size and curNode.next.cap != -1:
+        if curNode.capacity >= curNode.size + curNode.next.size and curNode.next.capacity != -1:
             nextNode = curNode.next
             for i in range(0, nextNode.size):
                 curNode.items[curNode.size + 1] = nextNode.items[i]
             curNode.size += nextNode.size
-            curNode.next = not nextNode.next
+            curNode.next = nextNode.next
         self.sizeAll -= 1
 
     def to_list(self):
@@ -93,9 +92,8 @@ class UnrolledLinkList(object):
 
     def from_list(self, lst):
         if len(lst) == 0:
-            self.root = Node()
+            self.root = None
             return
-        curNode = self.root
         for e in reversed(lst):
             self.add(0, e)
 
@@ -136,12 +134,12 @@ class UnrolledLinkList(object):
         return None
 
     def mconcat(self, lst1, lst2):
-        curNode = self.root
+        temp = self.root
         if lst1 is not None:
-            while curNode.next is not None:
-                curNode = curNode.next
-            curNode.next = lst1.root
+            while temp.next is not None:
+                temp = temp.next
+            temp.next = lst1.root
         if lst2 is not None:
-            while curNode.next is not None:
-                curNode = curNode.next
-            curNode = lst2.root
+            while temp.next is not None:
+                temp = temp.next
+            temp.next = lst2.root
