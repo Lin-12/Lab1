@@ -24,8 +24,8 @@
 * reduce-process structure elements to build a return value by speci?c functions (lst.reduce(sum));    
 * data structure should be a monoid and implement mempty and mconcat functions or methods;    
 * iterator: 
-- for the mutable version in Python style [12, Chapter 7. Classes & Iterators]; 
-- for the immutable version by closure [14], see example ahead.
+   - for the mutable version in Python style [12, Chapter 7. Classes & Iterators]; 
+   - for the immutable version by closure [14], see example ahead.
 
 #### contribution
 * contribution summary for each group member (should be checkable by git log and git blame);
@@ -37,8 +37,8 @@
 
 #### Work demonstration 
 * (how to use developed software, how to test it), should be repeatable by an instructor by given command-line examples:  
-- We write unrolled linked list file and test file on Pycharm.
-- Use terminal to test the code. like 'python Immutable_test.py -v'and 'python test_mutable.py -v'
+  - We write unrolled linked list file and test file on Pycharm.
+  - Use terminal to test the code. like 'python Immutable_test.py -v'and 'python test_mutable.py -v'.
 
 #### Conclusion:  
   Mutable version used used list to create a unrolled linked list.In immutable version,we create a new unrolled linked list before modifying each unrolled linked list, and do not change the original linked list.This Lab makes us to realize unrolled linked list and  mutable/immutable version.
