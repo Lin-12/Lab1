@@ -5,8 +5,8 @@
   Computational Process Organization Lab1,variant 1
 
 #### List of group members:
-  - Name:Huang Yanlin student number:192050222 
-  - Name:Lin ningning student number:192050192
+  - Name:Huang Yanlin,  student number:192050222 
+  - Name:Lin ningning,  student number:192050192
 
 #### Laboratory work number:
    Lab1 variant 1
