@@ -12,7 +12,7 @@
 4.Description:
   variant 1: Unrolled linked list (you can use built-in list inside node).
 
-5.Synopsis:
+5.Synopsis:  
     1)add a new element (lst.add(3), cons(lst, 3), extend(lst, 3));  
     2)remove an element (lst.remove(3), remove(lst, 3));
     3)size (lst.size(), size(lst));    
@@ -30,12 +30,12 @@
    * mutable&test_mutable:Lin ningning
    * immutable&immutable_test:Huang Yanlin
 
-7.Explanation of taken design decisions and analysis:
-    Unrolled linked list is a kind of transformation or improvement of linked list. Each node of it is stored by an array. The capacity of node array is fixed. 1. Insert operation: insert the element after finding the position according to the subscript. If the current inserted node array is full, a new node is created, and half of the elements of the current node are moved to the array of the new node, and the element is inserted finally. 2. Delete: delete the element according to the subscript. A node after deleting an element may need its neighbors to merge. Unrolled linked list has the advantages of random access of array and efficient insertion and deletion of linked list.
+7.Explanation of taken design decisions and analysis:  
+     Unrolled linked list is a kind of transformation or improvement of linked list. Each node of it is stored by an array. The capacity of node array is fixed. 1. Insert operation: insert the element after finding the position according to the subscript. If the current inserted node array is full, a new node is created, and half of the elements of the current node are moved to the array of the new node, and the element is inserted finally. 2. Delete: delete the element according to the subscript. A node after deleting an element may need its neighbors to merge. Unrolled linked list has the advantages of random access of array and efficient insertion and deletion of linked list.
 
 8.Work demonstration (how to use developed software, how to test it), should be repeatable by an instructor by given command-line examples:
     * We write unrolled linked list file and test file on Pycharm.
     * Use terminal to test the code. like 'python Immutable_test.py -v'and 'python test_mutable.py -v'
 
-9.Conclusion:
-  Mutable version used used list to create a unrolled linked list.In immutable version,we create a new unrolled linked list before modifying each unrolled linked list, and do not change the original linked list.This Lab makes us to realize unrolled linked list and  mutable/immutable version.
+9.Conclusion:  
+    Mutable version used used list to create a unrolled linked list.In immutable version,we create a new unrolled linked list before modifying each unrolled linked list, and do not change the original linked list.This Lab makes us to realize unrolled linked list and  mutable/immutable version.
