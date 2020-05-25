@@ -16,11 +16,13 @@ class TestMutableList(unittest.TestCase):
     def test_to_list(self):
         self.assertEqual(UnrolledLinkList().to_list(), [])
         lst = UnrolledLinkList(Node())
+        address1 = id(lst)
         lst.add(0, 'm')
         self.assertEqual(lst.to_list(), ['m'])
         lst.add(1, 'n')
         self.assertEqual(lst.to_list(), ['m', 'n'])
-
+        address2 = id(lst)
+        self.assertEqual(address1, address2)  # Determine whether the lst address changes
     def test_from_list(self):
         test_data = [
             [],
@@ -29,8 +31,11 @@ class TestMutableList(unittest.TestCase):
         ]
         for e in test_data:
             lst = UnrolledLinkList(Node())
+            address1 = id(lst)
             lst.from_list(e)
             self.assertEqual(lst.to_list(), e)
+            address2 = id(lst)
+            self.assertEqual(address1, address2)  # Determine whether the lst address changes
 
     def test_map(self):
         lst = UnrolledLinkList(Node())
@@ -129,14 +134,14 @@ class TestMutableList(unittest.TestCase):
         i = iter(UnrolledLinkList())
         self.assertRaises(StopIteration, lambda: next(i))
 
-    def find(self):
+    def test_find(self):
         x = ['m', 'n', 'o']
         lst = UnrolledLinkList(Node())
         lst.from_list(x)
         index = lst.find('n')
         self.assertEqual(0, index)
 
-    def filter(self):
+    def test_filter(self):
         def f(x1):
             res = x1 + 1
             return res
