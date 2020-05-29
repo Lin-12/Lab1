@@ -1,5 +1,8 @@
+from typing import List, Any
+
+
 class Node(object):
-    def __init__(self, max_capacity=16):
+    def __init__(self, max_capacity=16) -> None:
         self.capacity = max_capacity
         self.next = None
         self.prev = None
@@ -9,14 +12,14 @@ class Node(object):
 
 
 class UnrolledLinkList(object):
-    def __init__(self, root=None):
+    def __init__(self, root=None) -> None:
         self.sizeAll = 0
         self.root = root
 
-    def __iter__(self):
+    def __iter__(self) -> None:
         return UnrolledLinkList()
 
-    def __next__(self):
+    def __next__(self) -> None:
         if self.root is None:
             raise StopIteration
         curNode = self.root
@@ -26,11 +29,11 @@ class UnrolledLinkList(object):
         self.root = curNode.next
 
     # return the sizeALl about the UnrolledLinkList
-    def size(self):
+    def size(self) -> int:
         return self.sizeAll
 
     # Insert new element in UnrolledLinkList by index
-    def add(self, index, e):
+    def add(self, index: int, e: str) -> None:
 
         # When the index is illegal, return directly
         if index < 0 or index > self.sizeAll:
@@ -66,7 +69,7 @@ class UnrolledLinkList(object):
         self.sizeAll += 1
 
     # Remove an element in UnrolledLinkList by index
-    def remove(self, index):
+    def remove(self, index: int) -> None:
         if index < 0 or index > self.sizeAll:
             return
         curNode = self.root
@@ -92,7 +95,7 @@ class UnrolledLinkList(object):
         self.sizeAll -= 1
 
     # make UnrolledLinkList be a list
-    def to_list(self):
+    def to_list(self) -> List:
         res = []
         curNode = self.root
         while curNode is not None:
@@ -102,7 +105,7 @@ class UnrolledLinkList(object):
         return res
 
     # Make a list to be  UnrolledLinkList
-    def from_list(self, lst):
+    def from_list(self, lst: List) -> None:
         if len(lst) == 0:
             self.root = None
             return
@@ -110,7 +113,7 @@ class UnrolledLinkList(object):
             self.add(0, e)
 
     # Find the specified data in the UnrolledLinkList
-    def find(self, data):
+    def find(self, data: str) -> int:
         curNode = self.root
         count = 0
         while curNode is not None:
@@ -122,21 +125,21 @@ class UnrolledLinkList(object):
             return -1
 
     # Utilize f to filter the UnrolledLinkList
-    def filter(self, f):
+    def filter(self, f: Any) -> List:
         curNode = self.root
         for i in range(0, curNode.size):
             curNode.items[i] = f(curNode.items[i])
         return self.to_list()
 
     # Utilize the f to map the UnrolledLinkList
-    def map(self, f):
+    def map(self, f: Any) -> None:
         curNode = self.root
         while curNode is not None:
             for i in range(0, curNode.size):
                 curNode.items[i] = f(curNode.items[i])
             curNode = curNode.next
     # process structure elements to build a return value by specific functions
-    def reduce(self, f, initial_state):
+    def reduce(self, f: Any, initial_state: int) -> int:
         state = initial_state
         curNode = self.root
         while curNode is not None:
@@ -146,11 +149,11 @@ class UnrolledLinkList(object):
         return state
 
     # Make it empty and return None
-    def empty(self):
+    def empty(self) -> None:
         return None
 
     # Combine two UnrolledLinkList
-    def mconcat(self, lst1, lst2):
+    def mconcat(self, lst1: List, lst2: List) -> None:
         temp = self.root
         if lst1 is not None:
             while temp.next is not None:

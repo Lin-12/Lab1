@@ -5,7 +5,7 @@ from mutable import *
 
 
 class TestMutableList(unittest.TestCase):
-    def test_size(self):
+    def test_size(self) -> None:
         lst = UnrolledLinkList(Node())
         self.assertEqual(lst.size(), 0)
         lst.add(0, 'm')
@@ -13,7 +13,7 @@ class TestMutableList(unittest.TestCase):
         lst.add(1, 'n')
         self.assertEqual(lst.size(), 2)
 
-    def test_to_list(self):
+    def test_to_list(self) -> None:
         self.assertEqual(UnrolledLinkList().to_list(), [])
         lst = UnrolledLinkList(Node())
         lst.add(0, 'm')
@@ -23,7 +23,7 @@ class TestMutableList(unittest.TestCase):
 
 
 
-    def test_from_list(self):
+    def test_from_list(self) -> None:
         test_data = [
             [],
             ['m'],
@@ -34,7 +34,7 @@ class TestMutableList(unittest.TestCase):
             lst.from_list(e)
             self.assertEqual(lst.to_list(), e)
 
-    def test_map(self):
+    def test_map(self) -> None:
         lst = UnrolledLinkList(Node())
         lst.map(str)
         self.assertEqual(lst.to_list(), [])
@@ -43,7 +43,7 @@ class TestMutableList(unittest.TestCase):
         lst.map(str)
         self.assertEqual(lst.to_list(), ["1", "2", "3"])
 
-    def test_reduce(self):
+    def test_reduce(self) -> None:
         lst = UnrolledLinkList(Node())
         self.assertEqual(lst.reduce(lambda stb, e1: stb + e1, 0), 0)
         # sum of list
@@ -62,20 +62,20 @@ class TestMutableList(unittest.TestCase):
             self.assertEqual(lst.reduce(lambda stb, _: stb + 1, 0), lst.size())
 
     @given(st.lists(st.integers()))
-    def test_from_list_to_list_equality(self, a):
+    def test_from_list_to_list_equality(self, a: int) -> None:
         lst = UnrolledLinkList(Node())
         lst.from_list(a)
         b = lst.to_list()
         self.assertEqual(a, b)
 
     @given(st.lists(st.integers()))
-    def test_python_len_and_list_size_equality(self, a):
+    def test_python_len_and_list_size_equality(self, a: int) -> None:
         lst = UnrolledLinkList(Node())
         lst.from_list(a)
         self.assertEqual(lst.size(), len(a))
 
     @given(a=st.lists(st.integers()), b=st.lists(st.integers()), c=st.lists(st.integers()))
-    def test_monoid_associativity(self, a, b, c):
+    def test_monoid_associativity(self, a: int, b: int, c: int) -> None:
         lst1 = UnrolledLinkList(Node())
         lst2 = UnrolledLinkList(Node())
         lst3 = UnrolledLinkList(Node())
@@ -101,7 +101,7 @@ class TestMutableList(unittest.TestCase):
         self.assertEqual(lst_1, lst_2)
 
     @given(st.lists(st.integers()))
-    def test_monoid_identity(self, data):
+    def test_monoid_identity(self, data: str) -> None:
         lst = UnrolledLinkList(Node())
         lst.from_list(data)
         lst2 = UnrolledLinkList(Node())
@@ -115,7 +115,7 @@ class TestMutableList(unittest.TestCase):
         b = lst_concat.to_list()
         self.assertEqual(b, data)
 
-    def test_iter(self):
+    def test_iter(self) -> None:
         x = [1, 2, 3]
         lst = UnrolledLinkList(Node())
         lst.from_list(x)
@@ -131,14 +131,14 @@ class TestMutableList(unittest.TestCase):
         i = iter(UnrolledLinkList())
         self.assertRaises(StopIteration, lambda: next(i))
 
-    def test_find(self):
+    def test_find(self) -> None:
         x = ['m', 'n', 'o']
         lst = UnrolledLinkList(Node())
         lst.from_list(x)
         index = lst.find('n')
         self.assertEqual(0, index)
 
-    def test_filter(self):
+    def test_filter(self) -> None:
         def f(_ze):
             res = _ze + 1
             return res
