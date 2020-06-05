@@ -5,7 +5,7 @@ from mutable import *
 
 
 class TestMutableList(unittest.TestCase):
-    def test_size(self) -> None:
+    def test_size(self):
         lst = UnrolledLinkList(Node())
         self.assertEqual(lst.size(), 0)
         lst.add(0, 'm')
@@ -13,7 +13,7 @@ class TestMutableList(unittest.TestCase):
         lst.add(1, 'n')
         self.assertEqual(lst.size(), 2)
 
-    def test_to_list(self) -> None:
+    def test_to_list(self):
         self.assertEqual(UnrolledLinkList().to_list(), [])
         lst = UnrolledLinkList(Node())
         lst.add(0, 'm')
@@ -21,9 +21,7 @@ class TestMutableList(unittest.TestCase):
         lst.add(1, 'n')
         self.assertEqual(lst.to_list(), ['m', 'n'])
 
-
-
-    def test_from_list(self) -> None:
+    def test_from_list(self):
         test_data = [
             [],
             ['m'],
@@ -34,7 +32,7 @@ class TestMutableList(unittest.TestCase):
             lst.from_list(e)
             self.assertEqual(lst.to_list(), e)
 
-    def test_map(self) -> None:
+    def test_map(self):
         lst = UnrolledLinkList(Node())
         lst.map(str)
         self.assertEqual(lst.to_list(), [])
@@ -43,14 +41,13 @@ class TestMutableList(unittest.TestCase):
         lst.map(str)
         self.assertEqual(lst.to_list(), ["1", "2", "3"])
 
-    def test_reduce(self) -> None:
+    def test_reduce(self):
         lst = UnrolledLinkList(Node())
         self.assertEqual(lst.reduce(lambda stb, e1: stb + e1, 0), 0)
         # sum of list
         lst = UnrolledLinkList(Node())
         lst.from_list([1, 2, 3])
         self.assertEqual(lst.reduce(lambda stb, e1: stb + e1, 0), 6)
-        # size
         test_data = [
             [],
             ['m'],
@@ -62,20 +59,20 @@ class TestMutableList(unittest.TestCase):
             self.assertEqual(lst.reduce(lambda stb, _: stb + 1, 0), lst.size())
 
     @given(st.lists(st.integers()))
-    def test_from_list_to_list_equality(self, a: int) -> None:
+    def test_from_list_to_list_equality(self, a):
         lst = UnrolledLinkList(Node())
         lst.from_list(a)
         b = lst.to_list()
         self.assertEqual(a, b)
 
     @given(st.lists(st.integers()))
-    def test_python_len_and_list_size_equality(self, a: int) -> None:
+    def test_python_len_and_list_size_equality(self, a):
         lst = UnrolledLinkList(Node())
         lst.from_list(a)
         self.assertEqual(lst.size(), len(a))
 
     @given(a=st.lists(st.integers()), b=st.lists(st.integers()), c=st.lists(st.integers()))
-    def test_monoid_associativity(self, a: int, b: int, c: int) -> None:
+    def test_monoid_associativity(self, a, b, c):
         lst1 = UnrolledLinkList(Node())
         lst2 = UnrolledLinkList(Node())
         lst3 = UnrolledLinkList(Node())
@@ -101,7 +98,7 @@ class TestMutableList(unittest.TestCase):
         self.assertEqual(lst_1, lst_2)
 
     @given(st.lists(st.integers()))
-    def test_monoid_identity(self, data: str) -> None:
+    def test_monoid_identity(self, data):
         lst = UnrolledLinkList(Node())
         lst.from_list(data)
         lst2 = UnrolledLinkList(Node())
@@ -109,13 +106,12 @@ class TestMutableList(unittest.TestCase):
         lst_concat.mconcat(lst, lst2.empty())
         b = lst_concat.to_list()
         self.assertEqual(b, data)
-
         lst_concat = UnrolledLinkList(Node())
         lst_concat.mconcat(lst2.empty(), lst)
         b = lst_concat.to_list()
         self.assertEqual(b, data)
 
-    def test_iter(self) -> None:
+    def test_iter(self):
         x = [1, 2, 3]
         lst = UnrolledLinkList(Node())
         lst.from_list(x)
@@ -131,23 +127,39 @@ class TestMutableList(unittest.TestCase):
         i = iter(UnrolledLinkList())
         self.assertRaises(StopIteration, lambda: next(i))
 
-    def test_find(self) -> None:
+    def test_find(self):
         x = ['m', 'n', 'o']
         lst = UnrolledLinkList(Node())
         lst.from_list(x)
         index = lst.find('n')
         self.assertEqual(0, index)
 
-    def test_filter(self) -> None:
+    def test_filter(self):
         def f(_ze):
             res = _ze + 1
             return res
-
         _ze = [1, 2, 3]
         lst = UnrolledLinkList(Node())
         lst.from_list(_ze)
         lst.filter(f)
         self.assertEqual([2, 3, 4], lst.to_list())
+
+    def test_add_to_head(self):
+        lst = UnrolledLinkList(Node())
+        self.assertEqual(lst.to_list(), [])
+        lst.add(0, 1)
+        self.assertEqual(lst.to_list(), [1])
+        lst.add(0, 2)
+        self.assertEqual(lst.to_list(), [2, 1])
+
+    def test_add_to_tail(self):
+        lst = UnrolledLinkList(Node())
+        self.assertEqual(lst.to_list(), [])
+        lst.add(0, 1)
+        self.assertEqual(lst.to_list(), [1])
+        lst.add(lst.sizeAll, 2)
+        self.assertEqual(lst.to_list(), [1, 2])
+
 
 if __name__ == '__main__':
     unittest.main()
